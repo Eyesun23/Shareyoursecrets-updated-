@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>LOGIN AND REGISTRATION</title>
+    <stytle>
+    </style>
+  </head>
+  <body>
+    <div class= "wrapper">
+      <div class= "header">
+        <h1>Welcome to Login and Registration Page!</h1>
+      </div>
+      <div class="reg">
+        <h4> Register</h4>
+        {% if messages and not request.session.loginError %}
+          {% for message in messages %}
+          <p style= "color:red;">{{message}}</p>
+          {% endfor %}
+        {% endif %}
+      <form action="/login" method="post">
+        {% csrf_token %}
+        <label for="first_name">First Name:</label>
+        <input class='form-control' type="text" name="first_name"><br>
+        <label for="last_name">Last Name:</label>
+        <input class='form-control' type="text" name="last_name"><br>
+        <label for="email">Email:</label>
+        <input class='form-control' type="text" name="email"><br>
+        <label for="password">Password:</label>
+        <input class='form-control' type="password" name='password'><br>
+        <label for="fshjshjd">Confirm Password:</label>
+        <input  class='form-control'type="password" name="confirm_password"><br>
+        <hr>
+        <button class="bsuccess">Create User</button>
+      </form>
+    </div>
+    <div class="login">
+      <h4 class="text">Login</h4>
+      <form action="/users/register" method="post">
+        {% csrf_token %}
+        {% if messages and request.session.loginError %}
+          {% for message in messages %}
+          <p style="color: red;">{{ message }}</p>
+          {% endfor %}
+        {% endif %}
+        <label for="email">Email:</label>
+        <input class='form-control' type="email" name="email">
+        <label for="password">Password:</label>
+        <input class='form-control' type="password" name='password'>
+        <hr>
+        <input class='btn' type="submit" value="Login" role='button'/>
+      </form>
+    </div>
+  </div>
+ </body>
+</html>

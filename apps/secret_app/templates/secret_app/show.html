@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{{ first_name }} - Secret</title>
+
+  </head>
+  <body>
+    <div class="container">
+
+      <div class="header">
+        <div class='toolbar'>
+          <div class='group'>
+            <a href="/logout" class='primay'>Logout</a>
+          </div>
+        </div>
+        <h1>Welcome {{ first_name }}</h1>
+        <br>
+      </div>
+      <br>
+      <div class="row">
+        <div class="well">
+          <h3 class='head'>Post a secret message:</h3>
+          <form action="user/comments" method="post">
+            {% csrf_token %}
+            <div class='form-group'>
+              <textarea class='form-control' name="comment" placeholder="What is your deepest secret?"></textarea>
+            </div>
+            <div class='form-group'>
+              <input class='right' type="submit" value="Post">
+            </div>
+          </form>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col">
+          {% if request.session.isPop != 1 %}
+          <h3>Most recent Secrets</h3>
+          <a href="/popular">Most popular secrets</a>
+          {% for comment in comments %}
+            <div class="row">
+              <div class="noname">
+                <p><b>{{comment.comment}} - {{ comment.num_likes }} Like(s)</b></a> - {{ comment.created_at }}</p>
+                {% if comment.id in arr%}
+                  <a href="/unlike/{{comment.id}}" class="bdanger"><span class="glyphicon glyphicon-thumbs-down"></span></a>
+                    <a href="/like/{{comment.id}}" class="bprimary"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+                    {% if comment.user.id == request.session.user_id %}
+                      <a href="/delete/{{ comment_id }}" class="btn btn-danger pull-right"><span class="glyphicon glyphicon-trash"></span></a>
+                    {% endif %}
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+          {% else %}
+          <h3>Most popular Secrets</h3>
+          <a href="/recent">Most Recent secrets</a>
+          {% for comment in allcomments %}
+            <div class="row">
+              <div class="noname">
+                <p><b>{{comment.comment}} - {{ comment.num_likes }} Like(s)</b></a> - {{ comment.created_at }}</p>
+                {% if comment.id in arr%}
+                  <a href="/unlike/{{comment.id}}" class="bdanger"><span class="thumbs-down"></span></a>
+                    <a href="/like/{{comment.id}}" class="bprimary"><span class="thumbs-up"></span></a>
+                    {% if comment.user.id == request.session.user_id %}
+                      <a href="/delete/{{ comment_id }}" class="btn btn-danger pull-right"><span class="glyphicon glyphicon-trash"></span></a>
+                    {% endif %}
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
